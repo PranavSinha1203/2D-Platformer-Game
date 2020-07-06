@@ -681,6 +681,11 @@ MonoBehaviour:
   PlayerAnimator: {fileID: 1184850466}
   PlayerColliderNormalPosition: 0.95
   PlayerColliderCrouchPosition: 0.55
+  NormalSizex: 0.5
+  NormalSizey: 2
+  CrouchSizex: 1
+  CrouchSizey: 1.2
+  Speed: 6
 --- !u!95 &1184850466 stripped
 Animator:
   m_CorrespondingSourceObject: {fileID: 726046200327486013, guid: c186c564f0cd33546bdba3cdadde0afb,
@@ -711,7 +716,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5, y: 2.03061}
+  m_Size: {x: 0.5, y: 2}
   m_EdgeRadius: 0
 --- !u!1001 &1585947753
 PrefabInstance:
