@@ -7,15 +7,19 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     public Animator PlayerAnimator;
     BoxCollider2D PlayerCollider;
-    Vector2 Playerpos;
+    Rigidbody2D Player_rb;
+    private Vector2 Playerpos;
+    public float JumpForce;
     public float PlayerColliderNormalPosition, PlayerColliderCrouchPosition;
     public float NormalSizex, NormalSizey;
     public float CrouchSizex, CrouchSizey;
     public float Speed;
-   private Vector2 PlayerPosition;
+    private Vector2 PlayerPosition;
+    
     void Start()
     {
         PlayerCollider = GetComponent<BoxCollider2D>();
+        Player_rb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
@@ -33,9 +37,11 @@ public class PlayerController : MonoBehaviour
     {
         float Horizontalspeed = Input.GetAxisRaw("Horizontal");
         PlayerAnimator.SetFloat("Speed", Mathf.Abs(Horizontalspeed));
+
         PlayerPosition = transform.position;
         PlayerPosition.x += Horizontalspeed * Speed * Time.deltaTime;
         transform.position = PlayerPosition;
+
         Vector2 scale = transform.localScale;
         if (Horizontalspeed < 0)
         {
@@ -51,8 +57,6 @@ public class PlayerController : MonoBehaviour
 
     void PlayerCrouch()
     {
-       
-
         if (Input.GetKey(KeyCode.LeftControl))
         {
             PlayerAnimator.SetBool("isCrouch", true);
@@ -65,9 +69,7 @@ public class PlayerController : MonoBehaviour
             PlayerCollider.size = new Vector2(NormalSizex, NormalSizey);
             PlayerCollider.offset = new Vector2(Playerpos.x, Playerpos.y + PlayerColliderNormalPosition);
 
-        }
-
-        
+        } 
     }
 
     void PlayerJump()
@@ -75,6 +77,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             PlayerAnimator.SetBool("Jump", true);
+            Player_rb.AddForce(Vector3.up * JumpForce);
         }
         else
         {
@@ -82,5 +85,5 @@ public class PlayerController : MonoBehaviour
         }
     }
 
- 
+
 }
