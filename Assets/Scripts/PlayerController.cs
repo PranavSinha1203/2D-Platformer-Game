@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     // Start is called before the first frame update
     public Animator PlayerAnimator;
     BoxCollider2D PlayerCollider;
-    Rigidbody2D Player_rb;
+    Rigidbody2D PlayerRb;
     private Vector2 Playerpos;
     public float JumpForce;
     public float PlayerColliderNormalPosition, PlayerColliderCrouchPosition;
@@ -19,18 +19,15 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         PlayerCollider = GetComponent<BoxCollider2D>();
-        Player_rb = GetComponent<Rigidbody2D>();
+        PlayerRb = GetComponent<Rigidbody2D>();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         PlayerHorizontalMovement();
         PlayerCrouch();
         PlayerJump();
-        
-
     }
 
     void PlayerHorizontalMovement()
@@ -77,7 +74,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             PlayerAnimator.SetBool("Jump", true);
-            Player_rb.AddForce(Vector3.up * JumpForce);
+            PlayerRb.AddForce(Vector3.up * JumpForce);
         }
         else
         {
