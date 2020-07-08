@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     public float CrouchSizex, CrouchSizey;
     public float Speed;
     private Vector2 PlayerPosition;
+    private bool IsJump;
     
     void Start()
     {
@@ -71,10 +72,11 @@ public class PlayerController : MonoBehaviour
 
     void PlayerJump()
     {
-        if (Input.GetKey(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.W) && IsJump)
         {
             PlayerAnimator.SetBool("Jump", true);
             PlayerRb.AddForce(Vector3.up * JumpForce);
+            IsJump = false;
         }
         else
         {
@@ -82,5 +84,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if(col.gameObject.tag == "Ground")
+        {
+            IsJump = true;
+        }
+       
+    }
 
 }

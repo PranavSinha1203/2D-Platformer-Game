@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 960737278}
   m_Layer: 0
   m_Name: LevelDesign
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1327,7 +1327,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   PlayerAnimator: {fileID: 1184850466}
-  JumpForce: 10
+  JumpForce: 300
   PlayerColliderNormalPosition: 0.95
   PlayerColliderCrouchPosition: 0.55
   NormalSizex: 0.5
