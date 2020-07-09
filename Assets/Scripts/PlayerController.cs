@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public float Speed;
     private Vector2 PlayerPosition;
     private bool IsJump;
+    public float PlayerDeadPos;
     
     void Start()
     {
@@ -29,6 +31,7 @@ public class PlayerController : MonoBehaviour
         PlayerHorizontalMovement();
         PlayerCrouch();
         PlayerJump();
+        RestartLevel();
     }
 
     void PlayerHorizontalMovement()
@@ -81,6 +84,14 @@ public class PlayerController : MonoBehaviour
         else
         {
             PlayerAnimator.SetBool("Jump", false);
+        }
+    }
+
+    void RestartLevel()
+    {
+        if(transform.position.y< PlayerDeadPos)
+        {
+            SceneManager.LoadScene("Level1");
         }
     }
 
