@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Ground
   - Death
+  - Boundary
   layers:
   - Default
   - TransparentFX
@@ -15,13 +16,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - player
+  - ground
+  - restart level
+  - Level Complete
+  - Enemy
+  - collictible
+  - EnemyBoundary
   - 
   - 
   - 

@@ -5,12 +5,20 @@ using UnityEngine.SceneManagement;
 
 public class LevelLoad : MonoBehaviour
 {
-    public string Level2;
+    public string LevelComplete;
+    public GameObject LevelCompletePanel;
     private void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.GetComponent< PlayerController>() != null)
         {
-            SceneManager.LoadScene(Level2);
+           // PlayerController.instance.PlayerMove = false;
+            LevelCompletePanel.SetActive(true);
+            
         }
+    }
+
+    public void NextLevel()
+    {
+        SceneManager.LoadScene(LevelComplete);
     }
 }

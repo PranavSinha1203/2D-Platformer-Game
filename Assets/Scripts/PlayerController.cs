@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
     // Start is called before the first frame update
+    public static PlayerController instance;
     public Animator PlayerAnimator;
     BoxCollider2D PlayerCollider;
     Rigidbody2D PlayerRb;
@@ -18,42 +20,75 @@ public class PlayerController : MonoBehaviour
     private Vector2 PlayerPosition;
     private bool IsJump;
     public float PlayerDeadPos;
-    
+    public string RestartLevel;
+    public int score;
+    public Text ScoreUI;
+    public GameObject DeadPlayer;
+    public GameObject GameOverPanel;
+    public GameObject PlayerAlive;
+    public bool PlayerMove;
+    private int Lives;
+    public GameObject[] LivesImages;
+
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+    }
+
     void Start()
     {
         PlayerCollider = GetComponent<BoxCollider2D>();
         PlayerRb = GetComponent<Rigidbody2D>();
+        score = 0;
+        Lives = 3;
+        PlayerMove = true;
+        //PlayerAlive.SetActive(true);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        PlayerHorizontalMovement();
-        PlayerCrouch();
-        PlayerJump();
-        RestartLevel();
+        
+            PlayerHorizontalMovement();
+            PlayerCrouch();
+            PlayerJump();
+
+        if(Lives<1)
+        {
+            PlayerDead();
+        }
+        
+
     }
 
     void PlayerHorizontalMovement()
     {
-        float Horizontalspeed = Input.GetAxisRaw("Horizontal");
-        PlayerAnimator.SetFloat("Speed", Mathf.Abs(Horizontalspeed));
-
-        PlayerPosition = transform.position;
-        PlayerPosition.x += Horizontalspeed * Speed * Time.deltaTime;
-        transform.position = PlayerPosition;
-
-        Vector2 scale = transform.localScale;
-        if (Horizontalspeed < 0)
+        if(PlayerMove)
         {
-            scale.x = -1 * Mathf.Abs(scale.x);
-        }
-        else if (Horizontalspeed > 0)
-        {
-            scale.x = Mathf.Abs(scale.x);
-        }
+            float Horizontalspeed = Input.GetAxisRaw("Horizontal");
+            PlayerAnimator.SetFloat("Speed", Mathf.Abs(Horizontalspeed));
 
-        transform.localScale = scale;
+            PlayerPosition = transform.position;
+            PlayerPosition.x += Horizontalspeed * Speed * Time.deltaTime;
+            transform.position = PlayerPosition;
+
+            Vector2 scale = transform.localScale;
+            if (Horizontalspeed < 0)
+            {
+                scale.x = -1 * Mathf.Abs(scale.x);
+            }
+            else if (Horizontalspeed > 0)
+            {
+                scale.x = Mathf.Abs(scale.x);
+            }
+
+            transform.localScale = scale;
+        }
+       
     }
 
     void PlayerCrouch()
@@ -87,21 +122,52 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void RestartLevel()
+    public void ScoreIncrement()
     {
-        if(transform.position.y< PlayerDeadPos)
-        {
-            SceneManager.LoadScene("Level1");
-        }
+        score += 10;
+        ScoreUI.text = score.ToString();
     }
+
 
     private void OnCollisionEnter2D(Collision2D col)
     {
-        if(col.gameObject.tag == "Ground")
+      
+        if(col.gameObject.layer == 9)
         {
             IsJump = true;
         }
+        if(col.gameObject.layer == 10 )
+        {
+            PlayerDead();
+        }
+        if(col.gameObject.layer == 12)
+        {
+            LivesImages[Lives-1].SetActive(false);
+            Lives--;
+        }
        
+    }
+
+    public void PlayerDead()
+    {
+        PlayerPosition = transform.position;
+        Instantiate(DeadPlayer, PlayerPosition, transform.rotation);
+        PlayerAlive.SetActive(false);
+        GameOverPanel.SetActive(true);
+    }
+
+    public void Restart()
+    {
+        SceneManager.LoadScene(RestartLevel);
+    }
+
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.layer == 13 )
+        {
+            Destroy(col.gameObject);
+            ScoreIncrement();
+        }
     }
 
 }
