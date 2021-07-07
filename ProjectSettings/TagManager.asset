@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Death
+  - Boundary
   layers:
   - Default
   - TransparentFX
@@ -13,13 +16,13 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - player
+  - ground
+  - restart level
+  - Level Complete
+  - Enemy
+  - collictible
+  - EnemyBoundary
   - 
   - 
   - 
@@ -40,4 +43,10 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Front-back
+    uniqueID: 3176073081
+    locked: 0
+  - name: Front
+    uniqueID: 3711033655
     locked: 0
